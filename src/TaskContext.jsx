@@ -10,13 +10,18 @@ export const TaskProvider = ({ children }) => {
   });
 
   const [newTask, setNewTask] = useState("");
+  const [nextId, setNextId] = useState(1); // Counter for generating unique IDs
 
   const addTask = column => {
     if (newTask.trim()) {
       setTasks(prevTasks => ({
         ...prevTasks,
-        [column]: [...prevTasks[column], newTask.trim()]
+        [column]: [
+          ...prevTasks[column],
+          { id: nextId, name: newTask.trim() } // Add task with ID
+        ]
       }));
+      setNextId(prevId => prevId + 1); // Increment the ID counter
       setNewTask("");
     }
   };
