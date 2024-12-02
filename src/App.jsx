@@ -9,8 +9,8 @@ function KanbanColumn({ title, tasks }) {
   const handleTaskMove = (task, fromColumn, toColumn) => {
     setTasks(prevTasks => {
       const newTasks = { ...prevTasks };
-      newTasks[fromColumn] = newTasks[fromColumn].filter(t => t !== task);
-      if (!newTasks[toColumn].includes(task)) {
+      newTasks[fromColumn] = newTasks[fromColumn].filter(t => t.id !== task.id);
+      if (!newTasks[toColumn].some(t => t.id === task.id)) {
         newTasks[toColumn].push(task);
       }
       return newTasks;
@@ -25,7 +25,7 @@ function KanbanColumn({ title, tasks }) {
       <ul className="list-group">
         {tasks.map(task =>
           <li key={task.id} className="list-group-item">
-            {task.text}
+            {task.name}
             {["To Do", "In Progress", "Done"]
               .filter(col => col !== title)
               .map(col =>
@@ -74,7 +74,7 @@ function App() {
           </button>
         </div>
       </div>
-      <div className="row">
+      <div className="row d-flex">
         {Object.entries(tasks).map(([columnName, columnTasks]) =>
           <KanbanColumn
             key={columnName}
