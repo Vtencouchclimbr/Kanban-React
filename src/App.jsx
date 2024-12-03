@@ -18,31 +18,37 @@ function KanbanColumn({ title, tasks }) {
   };
 
   return (
-    <div className="col-md-4 p-3">
+    <div className="col-12 col-md-4 p-3">
       <h4 className="text-center">
         {title}
       </h4>
       <ul className="list-group">
         {tasks.map(task =>
           <li key={task.id} className="list-group-item">
-            {task.name}
-            {["To Do", "In Progress", "Done"]
-              .filter(col => col !== title)
-              .map(col =>
+            <div className="d-flex flex-column flex-md-row align-items-center justify-content-between">
+              <div className="mb-2 mb-md-0">
+                {task.name}
+              </div>
+              <div className="d-flex flex-wrap">
+                {["To Do", "In Progress", "Done"]
+                  .filter(col => col !== title)
+                  .map(col =>
+                    <button
+                      key={col}
+                      onClick={() => handleTaskMove(task, title, col)}
+                      className="btn btn-sm btn-secondary mb-2 mb-md-0 mx-md-1 border"
+                    >
+                      Move to {col}
+                    </button>
+                  )}
                 <button
-                  key={col}
-                  onClick={() => handleTaskMove(task, title, col)}
-                  className="btn btn-sm btn-secondary ml-2"
+                  onClick={() => deleteTask(task.id, title)}
+                  className="btn btn-sm btn-danger mb-2 mb-md-0 mx-md-1 border"
                 >
-                  Move to {col}
+                  Delete
                 </button>
-              )}
-            <button
-              onClick={() => deleteTask(task.id, title)}
-              className="btn btn-sm btn-danger ml-2"
-            >
-              Delete
-            </button>
+              </div>
+            </div>
           </li>
         )}
       </ul>
@@ -74,7 +80,7 @@ function App() {
           </button>
         </div>
       </div>
-      <div className="row d-flex">
+      <div className="row d-flex flex-column flex-md-row">
         {Object.entries(tasks).map(([columnName, columnTasks]) =>
           <KanbanColumn
             key={columnName}
