@@ -1,7 +1,11 @@
+:root {
+  background-color: black;
+}
+
 body {
   display: flex;
   justify-content: center;
-  padding: 20px;
+  padding: 0px;
   height: 100vh;
   width: 100%;
   background-image: url('./assets/forest6.jpg');
