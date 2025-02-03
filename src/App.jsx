@@ -24,7 +24,7 @@ function KanbanColumn({ title, tasks }) {
       </h4>
       <ul className="list-group">
         {tasks.map(task =>
-          <li key={task.id} className="list-group-item">
+          <li key={task.id} style={{backgroundColor:'#368a44'}} className="list-group-item text-light">
             <div className="d-flex flex-column flex-md-row align-items-center justify-content-between">
               <div className="mb-2 mb-md-0">
                 {task.name}
