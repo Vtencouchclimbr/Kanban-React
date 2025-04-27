@@ -74,7 +74,7 @@ function KanbanColumn({ title, tasks }) {
               <div className="d-flex flex-column">
                 <div
                   className="mb-2"
-                  style={{ width: "300px" }}
+                  style={{ width: "" }}
                 >
                   {task.name}
                 </div>
