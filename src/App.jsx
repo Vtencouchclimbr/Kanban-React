@@ -53,16 +53,17 @@ function KanbanColumn({ title, tasks }) {
                   className="form-control mb-2"
                   value={editTaskName}
                   onChange={(e) => setEditTaskName(e.target.value)}
+                  style={{ width: "300px" }}
                 />
-                <div className="d-flex">
+                <div className="d-flex flex-row flex-wrap gap-2">
                   <button
-                    className="btn btn-sm btn-success me-2"
+                    className="btn btn-sm btn-success btn-xs-custom"
                     onClick={() => saveEdit(task.id)}
                   >
                     Save
                   </button>
                   <button
-                    className="btn btn-sm btn-secondary"
+                    className="btn btn-sm btn-secondary btn-xs-custom"
                     onClick={cancelEdit}
                   >
                     Cancel
@@ -70,35 +71,40 @@ function KanbanColumn({ title, tasks }) {
                 </div>
               </div>
             ) : (
-              <div className="d-flex flex-column flex-md-row align-items-center justify-content-between">
-                <div className="mb-2 mb-md-0">{task.name}</div>
-                <div className="d-flex flex-wrap">
+              <div className="d-flex flex-column">
+                <div
+                  className="mb-2"
+                  style={{ width: "300px" }}
+                >
+                  {task.name}
+                </div>
+                <div className="d-flex flex-row flex-wrap gap-2">
                   {["To Do", "In Progress", "Done"]
                     .filter((col) => col !== title)
                     .map((col) => (
                       <button
                         key={col}
                         onClick={() => handleTaskMove(task, title, col)}
-                        className="btn btn-sm btn-secondary mb-2 mb-md-0 mx-md-1 border"
+                        className="btn btn-sm btn-secondary btn-xs-custom border"
                       >
-                        Move to {col}
+                        To {col}
                       </button>
                     ))}
                   <button
                     onClick={() => startEditing(task)}
-                    className="btn btn-sm btn-warning mb-2 mb-md-0 mx-md-1 border"
+                    className="btn btn-sm btn-warning btn-xs-custom border"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => archiveTask(task, title)}
-                    className="btn btn-sm btn-info mb-2 mb-md-0 mx-md-1 border"
+                    className="btn btn-sm btn-info btn-xs-custom border"
                   >
                     Archive
                   </button>
                   <button
                     onClick={() => deleteTask(task.id, title)}
-                    className="btn btn-sm btn-danger mb-2 mb-md-0 mx-md-1 border"
+                    className="btn btn-sm btn-danger btn-xs-custom border"
                   >
                     Delete
                   </button>
@@ -120,6 +126,12 @@ function App() {
     setNewTask(event.target.value);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      addTask("To Do");
+    }
+  };
+
   return (
     <div className="container mt-4">
       <h1 className="text-light text-center mb-4">Kanban Board</h1>
@@ -130,6 +142,7 @@ function App() {
           placeholder="New Task"
           value={newTask}
           onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
         />
         <div className="input-group-append">
           <button
@@ -151,7 +164,7 @@ function App() {
       </div>
       <div className="mt-4">
         <button
-          className="btn btn-secondary"
+          className="border btn btn-secondary"
           onClick={() => setShowArchive(!showArchive)}
         >
           {showArchive ? "Hide Archive" : "Show Archive"}
@@ -166,14 +179,14 @@ function App() {
                 {archivedTasks.map((task) => (
                   <li
                     key={task.id}
-                    className="text-light list-group-item d-flex justify-content-between align-items-center"
+                    className="text-light list-group-item d-flex justify-content-between align-items-center py-1"
                     style={{ backgroundColor: "#6c757d" }}
                   >
-                    <div>
-                      <strong>{task.name}</strong> (From: {task.originalColumn})
-                    </div>
+                    <span style={{ color: "" }}>
+                      {task.name} (From: {task.originalColumn})
+                    </span>
                     <button
-                      className="btn btn-sm btn-success"
+                      className="btn btn-sm btn-success btn-xs-custom"
                       onClick={() => restoreTask(task.id)}
                     >
                       Restore

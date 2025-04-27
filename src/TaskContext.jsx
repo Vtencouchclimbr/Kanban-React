@@ -22,12 +22,10 @@ export function TaskProvider({ children }) {
 
   const [newTask, setNewTask] = useState('');
 
-  // Save tasks to local storage
   useEffect(() => {
     localStorage.setItem('kanban-tasks', JSON.stringify(tasks));
   }, [tasks]);
 
-  // Save archived tasks to local storage
   useEffect(() => {
     localStorage.setItem('kanban-archived-tasks', JSON.stringify(archivedTasks));
   }, [archivedTasks]);
@@ -62,12 +60,10 @@ export function TaskProvider({ children }) {
   };
 
   const archiveTask = (task, column) => {
-    // Remove from tasks
     setTasks((prevTasks) => ({
       ...prevTasks,
       [column]: prevTasks[column].filter((t) => t.id !== task.id),
     }));
-    // Add to archived tasks with the original column info
     setArchivedTasks((prev) => [...prev, { ...task, originalColumn: column }]);
   };
 
@@ -75,9 +71,7 @@ export function TaskProvider({ children }) {
     const taskToRestore = archivedTasks.find((task) => task.id === taskId);
     if (!taskToRestore) return;
 
-    // Remove from archived tasks
     setArchivedTasks((prev) => prev.filter((task) => task.id !== taskId));
-    // Restore to original column
     setTasks((prevTasks) => ({
       ...prevTasks,
       [taskToRestore.originalColumn]: [...prevTasks[taskToRestore.originalColumn], {

@@ -14,13 +14,15 @@ body {
   background-position: center;
 }
 
-h1,
-h4 {
-  color: #343a40;
+.list-group-item {
+  min-height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.list-group-item {
-  background-color: #be4b2e;
-  border: none;
-  margin-bottom: 5px;
+.btn-xs-custom {
+  padding: 0.1rem 0.3rem; 
+  font-size: 0.75rem;
+  line-height: 1.2;
 }
