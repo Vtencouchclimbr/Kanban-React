@@ -4,7 +4,7 @@ import { useTaskContext } from "./TaskContext";
 import { useState } from "react";
 
 function KanbanColumn({ title, tasks }) {
-  const { setTasks, deleteTask, editTask } = useTaskContext();
+  const { setTasks, deleteTask, editTask, archiveTask } = useTaskContext();
   const [editingTaskId, setEditingTaskId] = useState(null);
   const [editTaskName, setEditTaskName] = useState("");
 
@@ -38,12 +38,12 @@ function KanbanColumn({ title, tasks }) {
 
   return (
     <div className="col-12 col-md-4 p-3">
-      <h4 className="text-center">{title}</h4>
+      <h4 className="text-light text-center">{title}</h4>
       <ul className="list-group">
         {tasks.map((task) => (
           <li
             key={task.id}
-            style={{ backgroundColor: "" }}
+            style={{ backgroundColor: "#368a44" }}
             className="list-group-item text-light"
           >
             {editingTaskId === task.id ? (
@@ -91,6 +91,12 @@ function KanbanColumn({ title, tasks }) {
                     Edit
                   </button>
                   <button
+                    onClick={() => archiveTask(task, title)}
+                    className="btn btn-sm btn-info mb-2 mb-md-0 mx-md-1 border"
+                  >
+                    Archive
+                  </button>
+                  <button
                     onClick={() => deleteTask(task.id, title)}
                     className="btn btn-sm btn-danger mb-2 mb-md-0 mx-md-1 border"
                   >
@@ -107,7 +113,8 @@ function KanbanColumn({ title, tasks }) {
 }
 
 function App() {
-  const { tasks, newTask, setNewTask, addTask } = useTaskContext();
+  const { tasks, newTask, setNewTask, addTask, archivedTasks, restoreTask } = useTaskContext();
+  const [showArchive, setShowArchive] = useState(false);
 
   const handleInputChange = (event) => {
     setNewTask(event.target.value);
@@ -115,7 +122,7 @@ function App() {
 
   return (
     <div className="container mt-4">
-      <h1 className="text-center mb-4">Kanban Board</h1>
+      <h1 className="text-light text-center mb-4">Kanban Board</h1>
       <div className="input-group mb-3">
         <input
           type="text"
@@ -141,6 +148,42 @@ function App() {
             tasks={columnTasks}
           />
         ))}
+      </div>
+      <div className="mt-4">
+        <button
+          className="btn btn-secondary"
+          onClick={() => setShowArchive(!showArchive)}
+        >
+          {showArchive ? "Hide Archive" : "Show Archive"}
+        </button>
+        {showArchive && (
+          <div className="text-light mt-3">
+            <h3>Archived Tasks</h3>
+            {archivedTasks.length === 0 ? (
+              <p>No archived tasks.</p>
+            ) : (
+              <ul className="list-group">
+                {archivedTasks.map((task) => (
+                  <li
+                    key={task.id}
+                    className="text-light list-group-item d-flex justify-content-between align-items-center"
+                    style={{ backgroundColor: "#6c757d" }}
+                  >
+                    <div>
+                      <strong>{task.name}</strong> (From: {task.originalColumn})
+                    </div>
+                    <button
+                      className="btn btn-sm btn-success"
+                      onClick={() => restoreTask(task.id)}
+                    >
+                      Restore
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
