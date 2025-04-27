@@ -1,3 +1,5 @@
+/* src/App.css */
+
 :root {
   background-color: black;
 }
@@ -14,15 +16,85 @@ body {
   background-position: center;
 }
 
+/* Ensure the container respects boundaries */
+.container {
+  max-width: 100%;
+  overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+/* Kanban column (parent of cards) */
+.kanban-column {
+  max-width: 100%;
+  overflow: hidden; /* Prevent overflow */
+}
+
+/* Main Kanban card styles */
+.list-group {
+  width: 100%;
+}
+
 .list-group-item {
   min-height: 45px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box; /* Ensure padding is included in width */
 }
 
+/* Task name in main Kanban cards */
+.task-name {
+  max-width: 100%;
+  word-wrap: break-word; /* Enable text wrapping */
+  overflow-wrap: break-word; /* Modern equivalent of word-wrap */
+  display: block; /* Ensure it behaves as a block for proper wrapping */
+}
+
+/* Edit input in main Kanban cards */
+.task-name-input {
+  max-width: 100% !important; /* Override Bootstrap's form-control width */
+  box-sizing: border-box;
+}
+
+/* Archived card styles */
+.archive-card {
+  padding: 0.25rem 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Task text in archived cards */
+.archive-task-text {
+  max-width: calc(100% - 80px); /* Leave space for the Restore button */
+  word-wrap: break-word; /* Enable text wrapping */
+  overflow-wrap: break-word; /* Modern equivalent of word-wrap */
+  display: block; /* Ensure it behaves as a block for proper wrapping */
+}
+
+/* Custom class to make buttons smaller than btn-sm */
 .btn-xs-custom {
-  padding: 0.1rem 0.3rem; 
+  padding: 0.1rem 0.3rem;
   font-size: 0.75rem;
   line-height: 1.2;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .kanban-column {
+    padding: 0.5rem;
+  }
+
+  .task-name,
+  .task-name-input {
+    max-width: 100%;
+  }
+
+  .archive-task-text {
+    max-width: calc(100% - 60px); /* Adjust for smaller screens */
+  }
+}
+
+@media (max-width: 576px) {
+  .archive-task-text {
+    max-width: calc(100% - 50px);
+  }
 }

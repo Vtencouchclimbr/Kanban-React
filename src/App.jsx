@@ -37,7 +37,7 @@ function KanbanColumn({ title, tasks }) {
   };
 
   return (
-    <div className="col-12 col-md-4 p-3">
+    <div className="col-12 col-md-4 p-3 kanban-column">
       <h4 className="text-light text-center">{title}</h4>
       <ul className="list-group">
         {tasks.map((task) => (
@@ -50,10 +50,9 @@ function KanbanColumn({ title, tasks }) {
               <div className="d-flex flex-column">
                 <input
                   type="text"
-                  className="form-control mb-2"
+                  className="form-control mb-2 task-name-input"
                   value={editTaskName}
                   onChange={(e) => setEditTaskName(e.target.value)}
-                  style={{ width: "300px" }}
                 />
                 <div className="d-flex flex-row flex-wrap gap-2">
                   <button
@@ -72,10 +71,7 @@ function KanbanColumn({ title, tasks }) {
               </div>
             ) : (
               <div className="d-flex flex-column">
-                <div
-                  className="mb-2"
-                  style={{ width: "" }}
-                >
+                <div className="mb-2 task-name">
                   {task.name}
                 </div>
                 <div className="d-flex flex-row flex-wrap gap-2">
@@ -179,10 +175,10 @@ function App() {
                 {archivedTasks.map((task) => (
                   <li
                     key={task.id}
-                    className="text-light list-group-item d-flex justify-content-between align-items-center py-1"
+                    className="text-light list-group-item d-flex justify-content-between align-items-center py-1 archive-card"
                     style={{ backgroundColor: "#6c757d" }}
                   >
-                    <span style={{ color: "" }}>
+                    <span className="archive-task-text">
                       {task.name} (From: {task.originalColumn})
                     </span>
                     <button
