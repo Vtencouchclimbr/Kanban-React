@@ -1,4 +1,3 @@
-// src/App.jsx
 import "./App.css";
 import { useTaskContext } from "./TaskContext";
 import { useState } from "react";
@@ -70,11 +69,9 @@ function KanbanColumn({ title, tasks }) {
                 </div>
               </div>
             ) : (
-              <div className="d-flex flex-column">
-                <div className="mb-2 task-name">
-                  {task.name}
-                </div>
-                <div className="d-flex flex-row flex-wrap gap-2">
+              <div className="d-flex flex-column task-card-content">
+                <div className="task-name">{task.name}</div>
+                <div className="d-flex flex-row flex-nowrap gap-2 mt-auto button-container">
                   {["To Do", "In Progress", "Done"]
                     .filter((col) => col !== title)
                     .map((col) => (
