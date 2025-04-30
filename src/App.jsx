@@ -80,7 +80,7 @@ function KanbanColumn({ title, tasks }) {
                         onClick={() => handleTaskMove(task, title, col)}
                         className="btn btn-sm btn-secondary btn-xs-custom border"
                       >
-                        To {col}
+                        {col}
                       </button>
                     ))}
                   <button
